@@ -9,6 +9,9 @@ class HrEmployee(models.Model):
 
     slip_ids = fields.One2many('hr.payslip', 'employee_id', string='Payslips', readonly=True, help="payslip")
     payslip_count = fields.Integer(compute='_compute_payslip_count', string='Payslip Count')
+    tin = fields.Char(string="TIN")
+    account_no = fields.Char(string="Bank Account")
+    nssf_no = fields.Char(string="NSSF Number")
 
     def _compute_payslip_count(self):
 

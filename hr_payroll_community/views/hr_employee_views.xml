@@ -16,6 +16,23 @@
                         <field name="payslip_count" widget="statinfo" string="Payslips"/>
                     </button>
                 </xpath>
+                
+        </field>
+    </record>
+    <record id="hr_view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.view.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+                <xpath expr="//group[@name='managers']" position="before">
+                    <group name="payroll_info" string="Payroll Information">
+                           <field name="tin"/>
+                           <field name="account_no" />
+                           <field name="nssf_no" />
+                    <group>
+                </xpath>
+                
+
         </field>
     </record>
 </odoo>
