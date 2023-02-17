@@ -29,7 +29,7 @@
                            <field name="tin"/>
                            <field name="account_no" />
                            <field name="nssf_no" />
-                    <group>
+                    </group>
                 </xpath>
                 
 
