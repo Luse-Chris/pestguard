@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Odoo15 Employee Contracts Types',
-    'version': '15.0.1.1.0',
+    'name': 'Odoo16 Employee Contracts Types',
+    'version': '16.0.1.1.0',
     'category': 'Generic Modules/Human Resources',
     'summary': """
         Contract type in contracts
     """,
-    'description': """Odoo15 Employee Contracts Types,Odoo15 Employee, Employee Contracts, Odoo 15""",
+    'description': """Odoo16 Employee Contracts Types,Odoo16 Employee, Employee Contracts, Odoo 16""",
     'author': 'Odoo SA,Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',

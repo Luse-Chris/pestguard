@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vfd_vfd,soft_vfd.vfd_vfd,model_vfd_vfd,base.group_user,1,1,1,1
+access_vfd_receipt,soft_vfd.vfd_receipt,model_vfd_receipt,base.group_user,1,1,1,1
+access_vfd_receipt_line,soft_vfd.vfd_receipt_line,model_vfd_receipt_line,base.group_user,1,1,1,1
+access_vfd_zreport,soft_vfd.vfd_zreport,model_vfd_zreport,base.group_user,1,1,1,1

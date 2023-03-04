@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="base_view_partner_form_inherit">
+            <field name="name">base_view_partner_form_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='website']" position="before">
+                    <field name="id_type"  attrs="{'invisible':[('company_type', '=', 'company')], 'required': [('company_type', '=', 'person')]}"/>
+                    <field name="tin" attrs="{'invisible':[('company_type', '=', 'person'), ('id_type', '!=', '1')], 'required': ['|', ('company_type', '=', 'company'), ('id_type','=', '1')]}"/>
+                    <field name="vrn"  attrs="{'invisible':[('company_type', '=', 'person')]}"/>
+                    <field name="nida" attrs="{'invisible':['|', ('company_type', '=', 'company'), ('id_type', '!=', '5')],'required': [('company_type', '=', 'person'), ('id_type','=', '5')]}"/>
+                    <field name="passport" attrs="{'invisible':['|', ('company_type', '=', 'company'), ('id_type', '!=', '4')],'required': [('company_type', '=', 'person'), ('id_type','=', '4')]}"/>
+                    <field name="voters_number" attrs="{'invisible':['|', ('company_type', '=', 'company'), ('id_type', '!=', '3')],'required': [('company_type', '=', 'person'), ('id_type','=', '3')]}"/>
+                    <field name="driving_license" attrs="{'invisible':['|', ('company_type', '=', 'company'), ('id_type', '!=', '2')],'required': [('company_type', '=', 'person'), ('id_type','=', '2')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

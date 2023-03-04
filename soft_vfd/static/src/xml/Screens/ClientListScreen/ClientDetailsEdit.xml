@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ClientDetailsEdit" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
+        <xpath expr="//section[hasclass('client-details')]" position="inside">
+            <div class="client-detail">
+                <span class="label">VRN</span>
+                <input class="detail client-address-vrn" name="vrn" t-on-change="captureChange" t-att-value="props.partner.vrn || ''" placeholder="VRN" />
+            </div>
+            <div class="client-detail">
+                <span class="label">ID Type</span>
+                <select class="detail client-address-id_type needsclick" name="id_type" t-on-change="captureChange">
+                    <option value="6">NIL </option>
+                    <t t-foreach="customerIdTypes" t-as="e" t-key="e.value">
+                        <option t-att-value="e.value" t-att-selected="props.partner.id_type ? ((e.value === props.partner.id_type) ? true : undefined) : undefined">
+                            <t t-esc="e.label" />
+                        </option>
+                    </t>
+                </select>
+            </div>
+            <t t-if="changes?.['id_type'] === '1' || props.partner.id_type === '1' ">
+                <div class="client-detail">
+                    <span class="label">TIN number</span>
+                    <input class="detail client-address-tin" name="tin" t-on-change="captureChange" t-att-value="props.partner.tin || ''" placeholder="TIN number" />
+                </div>
+            </t>
+            <t t-if="changes?.['id_type'] === '2' || props.partner.id_type === '2'">
+                <div class="client-detail">
+                    <span class="label">Driver License</span>
+                    <input class="detail client-address-driving_license" name="driving_license" t-on-change="captureChange" t-att-value="props.partner.driving_license || ''" placeholder="Driving License" />
+                </div>
+            </t>
+            <t t-if="changes?.['id_type'] === '3' || props.partner.id_type === '3'">
+                <div class="client-detail">
+                    <span class="label">Voter number</span>
+                    <input class="detail client-address-voters_number" name="voters_number" t-on-change="captureChange" t-att-value="props.partner.voters_number || ''" placeholder="Voter number" />
+                </div>
+            </t>
+            <t t-if="changes?.['id_type'] === '4' || props.partner.id_type === '4'">
+                <div class="client-detail">
+                    <span class="label">Passport</span>
+                    <input class="detail client-address-passport" name="passport" t-on-change="captureChange" t-att-value="props.partner.passport || ''" placeholder="Passport" />
+                </div>
+            </t>
+            <t t-if="changes?.['id_type'] === '5' || props.partner.id_type === '5'">
+                <div class="client-detail">
+                    <span class="label">NID</span>
+                    <input class="detail client-address-nida" name="nida" t-on-change="captureChange" t-att-value="props.partner.nida || ''" placeholder="National Identity Number" />
+                </div>
+            </t>
+  
+        </xpath>
+    </t>
+</templates>
+    

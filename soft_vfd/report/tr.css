@@ -1,0 +1,35 @@
+.receipt {
+  margin: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border: 3px;
+  font-size: 14px !important;
+  width: 266px !important;
+}
+.receipt-title {
+  font-size: 125%;
+  text-align: center;
+}
+.receipt-contact {
+  text-align: center;
+  font-size: 75%;
+}
+.receipt-contanct-header {
+  margin-right: 0.25em;
+}
+.receipt-detail {
+  font-size: 75%;
+}
+.receipt-logo {
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+}
+.receipt-qrcode {
+  margin-top: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  height: 100px;
+}

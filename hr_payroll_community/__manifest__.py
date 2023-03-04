@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Odoo15 Payroll',
+    'name': 'Odoo16 Payroll',
     'category': 'Generic Modules/Human Resources',
-    'version': '15.0.1.1.0',
+    'version': '16.0.1.0.0',
     'author': 'Odoo SA,Cybrosys Techno Solutions',
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': 'https://www.cybrosys.com',
     'summary': 'Manage your employee payroll records',
     'images': ['static/description/banner.png'],
-    'description': "Odoo 15 Payroll, Payroll, Odoo 15,Odoo Payroll, Odoo Community Payroll",
+    'description': "Odoo 16 Payroll, Payroll, Odoo 15,Odoo Payroll, Odoo Community Payroll",
     'depends': [
         'hr_contract',
         'hr_holidays',

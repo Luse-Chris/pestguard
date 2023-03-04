@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- TODO remove on v14. We keep this view just in case someone has inherit from it and also so that update is not broken -->
+    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+        
+        <xpath expr="//div[@id='qrcode']" position="after">
+            <div id="tra_qrcode" t-if="o.qr_code">
+                <p >
+                    <strong class="text-center">RECEIPT VERIFICATION CODE<br />
+                    </strong>
+                    <span class="text-center" t-esc="o.rctv_num" />
+                    <br />
+                    <img class="border border-dark rounded" t-att-src="o.build_qr_code_uri(o.qr_code)" />
+                </p>
+            </div>
+
+        </xpath>
+    </template>
+
+</odoo>

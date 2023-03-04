@@ -15,7 +15,7 @@ class StockMove(models.Model):
         string="Analytic Account",
         comodel_name="account.analytic.account",
     )
-    analytic_tag_ids = fields.Many2many("account.analytic.tag", string="Analytic Tags")
+    #analytic_tag_ids = fields.Many2many("account.analytic.tag", string="Analytic Tags")
 
     def _prepare_account_move_line(
         self, qty, cost, credit_account_id, debit_account_id, description
@@ -33,10 +33,10 @@ class StockMove(models.Model):
                 if self.analytic_account_id:
                     line[2].update({"analytic_account_id": self.analytic_account_id.id})
                 # Add analytic tags in debit line
-                if self.analytic_tag_ids:
-                    line[2].update(
-                        {"analytic_tag_ids": [(6, 0, self.analytic_tag_ids.ids)]}
-                    )
+                #if self.analytic_tag_ids:
+                    #line[2].update(
+                        #{"analytic_tag_ids": [(6, 0, self.analytic_tag_ids.ids)]}
+                    #)
         return res
 
     def _prepare_procurement_values(self):

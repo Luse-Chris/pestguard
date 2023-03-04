@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- <report 
+      id="vfd_receipt_pdf_report" 
+      model="account.move" 
+      string="VFD Receipt" 
+      report_type="qweb-pdf" 
+      name="pos_tra_vfd.vfd_receipt"
+      file="pos_tra_vfd.vfd_receipt" 
+      menu="True"  
+     /> -->
+     <record id="vfd_receipt_pdf_report" model="ir.actions.report">
+            <field name="name">VFD Receipt</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_tra_vfd.vfd_receipt</field>
+            <field name="report_file">pos_tra_vfd.vfd_receipt</field>
+            <field name="print_report_name">'VFD Receipt - %s' % (object.name).replace('/','')</field>
+            <field name="binding_model_id" ref="model_account_move" />
+            <field name="binding_type">report</field>
+        </record>
+    <template id="pos_tra_vfd.vfd_receipt">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div>
+                        <style>
+                            .pos-receipt {
+                                margin: 0 !important;
+                                margin-left: auto !important;
+                                margin-right: auto !important;
+                                border: 3px;
+                                font-size: 14px !important;
+                                <!-- width: 266px !important; -->
+                            }
+                             .receipt-logo {
+                               width: 50%;
+                               display: block;
+                                margin: 0 auto;
+                             }
+                            .pos-receipt-qrcode{
+                                margin-top: 10px;
+                                display: block;
+                                margin-left: auto;
+                                margin-right: auto;
+                                width: 100px;
+                                height: 100px;
+                            }
+                            .pos-receipt-contanct-header{
+                               margin-right:  0.25em;
+                               font-weight: bold;
+                            }
+                            .pos-receipt-detail{
+                                font-size: 75%;
+                            }
+                            .pos-receipt-contact {
+                               text-align: center;
+                               font-size: 75%;
+                            }
+                            .pos-receipt-title {
+                                font-size: 125%;
+                                text-align: center;
+                            }
+                            .pos-receipt-table{
+                               background-color: #fff;
+                               width: 100%;
+                               max-width: 100%;
+                               margin-bottom: 20px;
+                               border-spacing: 0;
+                               border-collapse: collapse
+                            }
+                            .pos-receipt-table th {
+                                 padding:  0.25rem;
+                            }
+                            .pos-receipt-table td {
+                               padding:  0.25rem;
+                            }
+                           .pos-receipt-table-stripped tr:nth-child(odd) {
+                              background-color:  #f2f2f2;
+                            }
+
+                        </style>
+                        <div>
+                            <div class="pos-receipt" t-if="o.tra_receipt_id">
+                                <h6 style="text-align:center">*** START OF LEGAL RECEIPT ***</h6>
+                                <br />
+                                <img class="receipt-logo" src="/pos_tra_vfd/static/src/images/tra_logo.jpeg" alt="Logo" style="width:100px;height:100px;" />
+                                <br />
+
+                                <div class="pos-receipt-contact">
+                                    <div class="pos-receipt-title">
+                                        <t t-esc="fd.reg_name" />
+                                    </div>
+                                    <br />
+                                    <div>
+                                        <span class="pos-receipt-contanct-header" t-esc="fd.address" />
+                                        <!-- <span t-esc="state.receipt.mobile" /> -->
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">MOBILE:</span>
+                                        <span t-esc="fd.mobile" />
+                                    </div>
+
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">TIN:</span>
+                                        <span t-esc="fd.tin.replace('-','')" />
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">VRN:</span>
+                                        <span t-esc="fd.vrn" />
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">SERIAL NO:</span>
+                                        <span t-esc="fd.efd_serial" />
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">UIN:</span>
+                                        <span t-esc="fd.uin" />
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">TAX OFFICE:</span>
+                                        <span t-esc="fd.tax_office" />
+                                    </div>
+                                </div>
+                                <hr style="border-top: dotted 1px" />
+
+                                <!-- Customer Details -->
+                                <div class="pos-receipt-detail">
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">CUSTOMER NAME:</span>
+                                        <span>
+                                            <t t-if="o.tra_receipt_id.cust_name">
+                                                <t t-esc="o.tra_receipt_id.cust_name" />
+                                            </t>
+                                            <t t-if="not o.tra_receipt_id.cust_name">
+                                                 n/a
+                                            </t>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">CUSTOMER ID TYPE:</span>
+                                        <span>
+                                            <t t-if="o.tra_receipt_id.cust_id_type">
+                                                <t t-esc="o.tra_receipt_id.cust_id_type" />
+                                            </t>
+                                            <t t-if="not o.tra_receipt_id.cust_id_type">
+                            NILL
+                                            </t>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">CUSTOMER ID:</span>
+                                        <span>
+                                            <t t-if="o.tra_receipt_id.cust_id">
+                                                <t t-esc="o.tra_receipt_id.cust_id" />
+                                            </t>
+                                            <t t-if="not o.tra_receipt_id.cust_id">
+                            n/a
+                                            </t>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">CUSTOMER VRN:</span>
+                                        <span>
+                                            <t t-if="o.tra_receipt_id.invoice_id.partner_id.vrn">
+                                                <t t-esc="o.tra_receipt_id.invoice_id.partner_id.vrn" />
+                                            </t>
+                                            <t t-if="not o.tra_receipt_id.invoice_id.partner_id.vrn">
+                            n/a
+                                            </t>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">CUSTOMER MOBILE:</span>
+                                        <span>
+                                            <t t-if="o.tra_receipt_id.mobile_num">
+                                                <t t-esc="o.tra_receipt_id.mobile_num" />
+                                            </t>
+                                            <t t-if="not o.tra_receipt_id.mobile_num">
+                            n/a
+                                            </t>
+                                        </span>
+                                    </div>
+
+                                    <!-- Receipt Details -->
+                                    <hr style="border-top: dotted 1px" />
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">RECEIPT NO:</span>
+                                        <span t-esc="o.tra_receipt_id.rct_num" />
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">Z NUMBER:</span>
+                                        <span t-esc="o.tra_receipt_id.z_num" />
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">RECEIPT DATE:</span>
+                                        <span t-esc="o.tra_receipt_id.date" />
+                                    </div>
+                                    <div>
+                                        <span class="pos-receipt-contanct-header">RECEIPT TIME:</span>
+                                        <span t-esc="o.tra_receipt_id.time" />
+                                    </div>
+                                    <hr style="border-top: dotted 1px" />
+                                </div>
+
+                                <!-- Purchase Items -->
+                                <table class="pos-receipt-table pos-receipt-table-stripped">
+                                    <thead>
+                                        <th style="width: 57%">Description</th>
+                                        <th>Qty</th>
+                                        <th>Amount</th>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.tra_receipt_id.line_ids" t-as="line" t-key="line.id">
+                                            <tr>
+                                                <td t-esc="line.desc" />
+                                                <td t-esc="line.qty" />
+                                                <td style="text-align: right;">
+                                                    <span t-esc="format_currency(line.amt)" />
+                                                    <span style="margin-left: 3px;" t-esc="TAX_CODE_MAP[line.tax_code]" />                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <table class="pos-receipt-table">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 70%">TOTAL EXCL OF TAX:</th>
+                                            <td align="right" t-esc="format_currency(o.tra_receipt_id.total_tax_excl)" />
+                                        </tr>
+                                        <tr>
+                                            <t t-if="o.tra_receipt_id.vat_amt_a > 0 ">
+                                                <th>
+                                                    <small>TAX A - 18%:</small>
+                                                </th>
+                                                <td align="right">
+                                                    <small t-esc="format_currency(o.tra_receipt_id.vat_amt_a)" />
+                                                </td>
+                                            </t>
+                                            <t t-if="o.tra_receipt_id.vat_amt_b > 0">
+                                                <th>
+                                                    <small>TAX B - 0%</small>
+                                                </th>
+                                                <td align="right">
+                                                    <small t-esc="format_currency(o.tra_receipt_id.vat_amt_b)" />
+                                                </td>
+                                            </t>
+                                            <t t-if="o.tra_receipt_id.vat_amt_c > 0">
+                                                <th>
+                                                    <small>TAX C - 0%</small>
+                                                </th>
+                                                <td align="right">
+                                                    <small t-esc="format_currency(o.tra_receipt_id.vat_amt_c)" />
+                                                </td>
+                                            </t>
+                                            <t t-if="o.tra_receipt_id.vat_amt_d > 0">
+                                                <th>
+                                                    <small>TAX D - 0%</small>
+                                                </th>
+                                                <td align="right">
+                                                    <small t-esc="format_currency(o.tra_receipt_id.vat_amt_d)" />
+                                                </td>
+                                            </t>
+                                            <t t-if="o.tra_receipt_id.vat_amt_e > 0">
+                                                <th>
+                                                    <small>TAX E - 0%</small>
+                                                </th>
+                                                <td align="right">
+                                                    <small t-esc="format_currency(o.tra_receipt_id.vat_amt_e)" />
+                                                </td>
+                                            </t>
+                                        </tr>
+                                        <tr>
+                                            <th>TOTAL TAX:</th>
+                                            <td align="right" t-esc="format_currency(sum([o.tra_receipt_id.vat_amt_a + o.tra_receipt_id.vat_amt_b + o.tra_receipt_id.vat_amt_c + o.tra_receipt_id.vat_amt_d + o.tra_receipt_id.vat_amt_e ]))" /> 
+                                    
+                                        </tr>
+                                        <tr>
+                                            <th>TOTAL INCL OF TAX:</th>
+                                            <td align="right" t-esc="format_currency(o.tra_receipt_id.total_tax_incl)" />
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <hr style="border-top: dotted 1px" />
+                                <div style="text-align: center;">
+                                    <span style="font-weight: bold;">RECEIPT VERIFICATION CODE</span>
+                                    <br />
+                                    <t t-esc="o.tra_receipt_id.rctv_num" />
+
+
+
+                                </div>
+                                <hr style="border-top: dotted 1px" />
+                                <!-- QR CODE -->
+                                <img class="pos-receipt-qrcode" t-att-src="build_qr_code_uri(o.tra_receipt_id.qr_code)" /> 
+                                <hr style="border-top: dotted 1px" />
+
+                                <div style="text-align: center">
+                   *** END OF LEGAL RECEIPT ***
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

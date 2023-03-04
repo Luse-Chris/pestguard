@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_pos_order_form_inherit">
+            <field name="name">pos.order.form.inherit</field>
+            <field name="model">pos.order</field>
+            <field name = "inherit_id" ref = "point_of_sale.view_pos_pos_form" />
+            <field name="arch" type="xml">
+               
+                <xpath expr="//button[@name='action_view_invoice']" position="before">
+                    <div>
+                        <field name="tra_receipt_id" invisible="1" />
+                        <button name="action_open_tra_receipt" string="VFD Receipt" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('tra_receipt_id', '=', False)]}" />
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_pos_order_tree_inherit" model="ir.ui.view">
+            <field name="name">pos.order.tree.inherit</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="tra_receipt_state" optional="show" widget="badge" decoration-info="tra_receipt_state in ('outgoing', 'draft')" decoration-success="tra_receipt_state in ('posted')" decoration-danger="tra_receipt_state in ('error')" />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_pos_order_filter_inherit" model="ir.ui.view">
+            <field name="name">pos.order.select.inherit</field>
+            <field name="model">pos.order</field>
+            <field name = "inherit_id" ref = "point_of_sale.view_pos_order_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@ name='order_date']" position="after">
+                    <separator />
+                    <filter string="Queued receipts" name="queued" domain="[('tra_receipt_state', '=', 'outgoing')]" help="Queued receipts" />
+                    <filter string="Posted receipts" name="posted" domain="[('tra_receipt_state', '=', 'posted')]" help="Posted receipts " />
+                    <filter string="Submitted receipts" name="submitted" domain="[('tra_receipt_state', '=', 'submitted')]" help="Submitted receipts " />
+                    <filter string="Failed receipts" name="failed" domain="[('tra_receipt_state', '=', 'error')]" help="Failed receipts" />
+                    <separator />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data noupdate="1">
+<record id="sequence_soft_vfd" model="ir.sequence">
+   <field name="name">TRA Receipt</field>
+   <field name="code">vfd.receipt</field>
+   <field name="active">TRUE</field>
+   <field name="prefix">VFD</field>
+   <field name="company_id"></field>
+   <field name="padding">6</field>
+   <field name="number_next">1</field>
+   <field name="number_increment">1</field>
+</record>
+</data></odoo>

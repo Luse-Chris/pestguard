@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="vfd_vfd_view_tree" model="ir.ui.view">
+            <field name="name">vfd.vfd.view.tree</field>
+            <field name="model">vfd.vfd</field>
+            <field name="arch" type="xml">
+                <tree string="TRA VFD" delete="false">
+                    <field name="reg_name" />
+                    <field name="tin" />
+                    <field name="efd_serial" />
+                    <field name="company_id" groups="base.group_multi_company" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="vfd_vfd_view_form" model="ir.ui.view">
+            <field name="name">vfd.vfd.view.form</field>
+            <field name="model">vfd.vfd</field>
+            <field name="arch" type="xml">
+                <form string="VFD Config" delete="false">
+                    <header>
+                        <!-- Register  -->
+                        <button name="action_register" string="Register" class="oe_highlight" type="object" />
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Disabled" bg_color="bg-danger" attrs="{'invisible': [('state', '!=', 'disabled')]}" />
+                        <widget name="web_ribbon" title="Test Mode" bg_color="bg-warning" attrs="{'invisible': [('state', '!=', 'dev')]}" />
+                        <widget name="web_ribbon" title="Production Mode" bg_color="bg-success" attrs="{'invisible': [('state', '!=', 'prod')]}" />
+                        <widget name="web_ribbon" title="Enabled" bg_color="bg-success" attrs="{'invisible': [('state', '!=', 'enabled')]}" />
+                        <group>
+                            <field name="username"  />
+                            <field name="password" password="True" />
+                            <!-- <field name="base_url" /> -->
+                            <!-- <field name="access_token" password="True" /> -->
+                            <field name="token_exp_date" />
+                            <field name="state" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                        </group>
+                        <notebook>
+                            <page id="vfd_general" string="General" states="dev,prod">
+                                <group>
+                                    <field name="reg_id" readonly='1' password="True" />
+                                    <field name="reg_name" readonly='1'  />
+                                    <field name="uin" readonly='1' password="True" />
+                                    <field name="gc" readonly='1'  />
+                                    <field name="vrn" readonly='1'  />
+                                    <field name="mobile" readonly='1'  />
+                                    <field name="receipt_code" readonly='1'  />
+                                    <field name="tax_office" readonly='1'  />
+                                    <field name="country" readonly='1'  />
+                                    <field name="city" readonly='1'  />
+                                    <field name="street" readonly='1'  />
+                                    <field name="address" readonly='1'  />
+                                    <field name="region" readonly='1'  />
+                                </group>
+                            </page>
+                            <page id="vfd_webhook" string="Webhook" states="dev,prod">
+                                <group>
+                                   <field name="webhook_secret"  />
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="vfd_vfd_action" model="ir.actions.act_window">
+            <field name="name">Virtual Fiscal Device</field>
+            <field name="res_model">vfd.vfd</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="soft_vfd_menu_root" name="VFD" sequence="1" web_icon="soft_vfd,static/description/icon.jpg" />
+        <menuitem id="soft_vfd_menu_config" name="Configurations" sequence="5" parent="soft_vfd_menu_root" />
+        <menuitem id="vfd_vfd_menu" name="Virtual Fiscal Device" sequence="2" parent="soft_vfd_menu_config" action="vfd_vfd_action" />
+    </data>
+</odoo>

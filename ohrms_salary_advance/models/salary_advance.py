@@ -125,6 +125,7 @@ class SalaryAdvancePayment(models.Model):
             raise UserError('You must Enter the Salary Advance amount')
 
         move_obj = self.env['account.move']
+        print('===========================move_obj :',move_obj ,'==============================')
         timenow = time.strftime('%Y-%m-%d')
         line_ids = []
         debit_sum = 0.0
@@ -168,8 +169,7 @@ class SalaryAdvancePayment(models.Model):
                 line_ids.append(credit_line)
                 credit_sum += credit_line[2]['credit'] - credit_line[2]['debit']
             move.update({'line_ids': line_ids})
-            print("move.update({'line_ids': line_ids})",move.update({'invoice_line_ids': line_ids}))
             draft = move_obj.create(move)
-            draft.post()
+            draft.action_post()
             self.state = 'approve'
             return True

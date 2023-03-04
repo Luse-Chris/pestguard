@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="vfd_receipt_view_form" model="ir.ui.view">
+            <field name="name">vfd.receipt.view.form</field>
+            <field name="model">vfd.receipt</field>
+            <field name="arch" type="xml">
+                <form string="TRA Receipt" create="false" edit="false" delete="false">
+                    <header>
+                        <button name="action_post_receipt" type="object" string="Post Receipt" attrs="{'invisible': [('state', '=', 'posted')]}" />
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <div class="o_form_label" string="Number" />
+                            <h1>
+                                <field name="number" readonly="1" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="cust_name" readonly="1" />
+                                <field name="mobile_num" readonly="1" />
+                                <field name="cust_id_type" readonly="1" />
+                                <field name="cust_id" readonly="1" />
+                                <field name="company_id" groups="base.group_multi_company" />
+
+                            </group>
+                            <group>
+                                <field name="gc" />
+                                <field name="dc" readonly="1" />
+                                <field name="payment_type" readonly="1" />
+                                <field name="z_num" readonly="1" />
+                                <field name="rctv_num" readonly="1" />
+                                <field name="rct_num" readonly="1" />
+                                <field name="total_tax_excl" readonly="1" />
+                                <field name="total_tax_incl" readonly="1" />
+                                <field name="discount" readonly="1" />
+                                <field name="qr_code" readonly="1" />
+                                <field name="date" readonly="1" />
+                                <field name="time" readonly="1" />
+                                <field name="tra_response_date" readonly="1" />
+                                <field name="tra_response_time" readonly="1" />
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Receipt Lines">
+                                <field name="line_ids" readonly="1">
+                                    <tree js_class="account_tree">
+                                        <field name="desc" />
+                                        <field name="qty" />
+                                        <field name="tax_code" />
+                                        <field name="price_unit" />
+                                        <field name="sub_total" sum="Total" />
+                                        <field name="price_total" sum="Total Tax Included" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="VAT TOTALS">
+                                <group>
+                                    <group string="VAT">
+                                        <field name="vat_amt_a" readonly="1" />
+                                        <field name="vat_amt_b" readonly="1" />
+                                        <field name="vat_amt_c" readonly="1" />
+                                        <field name="vat_amt_d" readonly="1" />
+                                        <field name="vat_amt_e" readonly="1" />
+                                    </group>
+                                    <group string="Net Amount">
+                                        <field name="net_amt_a" readonly="1" />
+                                        <field name="net_amt_b" readonly="1" />
+                                        <field name="net_amt_c" readonly="1" />
+                                        <field name="net_amt_d" readonly="1" />
+                                        <field name="net_amt_e" readonly="1" />
+                                    </group>
+                                </group>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="vfd_receipt_view_tree" model="ir.ui.view">
+            <field name="name">vfd.receipt.view.tree</field>
+            <field name="model">vfd.receipt</field>
+            <field name="arch" type="xml">
+                <tree string="TRA Receipt" create="false" delete="true">
+                    <field name="number" />
+                    <field name="rct_num" />
+                    <field name="z_num" />
+                    <field name="error_code" />
+                    <field name="gc" />
+                    <field name="dc" />
+                    <field name="company_id" groups="base.group_multi_company" />
+                    <field name="state" widget="badge" decoration-info="state == 'outgoing'" decoration-success="state not in ('outgoing','error','canceled')" />
+
+                </tree>
+            </field>
+        </record>
+        <record id="vfd_receipt_view_search" model="ir.ui.view">
+            <field name="name">vfd.receipt.view.search</field>
+            <field name="model">vfd.receipt</field>
+            <field name="arch" type="xml">
+                <search string="TRA Receipt">
+                    <field name="number" />
+                </search>
+            </field>
+        </record>
+        <record id="vfd_receipt_view_filter" model="ir.ui.view">
+            <field name="name">vfd.receipt.select</field>
+            <field name="model">vfd.receipt</field>
+            <field name="arch" type="xml">
+                <search string="Search Receipts">
+                    <separator />
+                    <filter string="In queue" name="outgoing" domain="[('state', '=', 'outgoing')]" help="Receipt in queue" />
+                    <filter string="Posted" name="posted" domain="[('state', '=', 'posted')]" help="Receipt posted" />
+                    <filter string="Failed" name="failed" domain="[('state', '=', 'error')]" help="Receipt failed" />
+                    <separator />
+                </search>
+            </field>
+        </record>
+        <record id="vfd_receipt_action" model="ir.actions.act_window">
+            <field name="name">VFD Receipt</field>
+            <field name="res_model">vfd.receipt</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_outgoing': 1}</field>
+        </record>
+        <record model="ir.actions.server" id="post_vfd_receipt">
+            <field name="name">Post receipts </field>
+            <field name="model_id" ref="model_vfd_receipt" />
+            <field name="binding_model_id" ref="model_vfd_receipt"/>
+            <field name="state">code</field>
+            <field name="code">
+                 action = records.action_post_receipt()
+            </field>
+        </record>
+        <record id="vfd_receipt_menu_action" model="ir.ui.menu">
+            <field name="name">Receipts</field>
+            <field name="action" ref="vfd_receipt_action" />
+            <field name="parent_id" ref="soft_vfd_menu_root" />
+            <field name="sequence">1</field>
+        </record>
+    </data>
+</odoo>

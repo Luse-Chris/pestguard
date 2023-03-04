@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="VFDOrderReceipt" owl="1">
+        <div>
+            <div class="pos-receipt" t-if="state.receipt">
+                <h4 style="text-align:center">*** START OF LEGAL RECEIPT ***</h4>
+                <br />
+                <img class="pos-receipt-logo" src="/soft_vfd/static/src/images/tra_logo.jpeg" alt="Logo" style="width:100px;height:100px;" />
+                <br />
+
+                <div class="pos-receipt-contact">
+                    <div class="pos-receipt-title">
+                        <t t-esc="state.receipt.reg_name" />
+                    </div>
+                    <br />
+                    <div>
+                        <span class="pos-receipt-contanct-header" t-esc="state.receipt.address" />
+                        <!-- <span t-esc="state.receipt.mobile" /> -->
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">MOBILE:</span>
+                        <span t-esc="state.receipt.mobile" />
+                    </div>
+
+                    <div>
+                        <span class="pos-receipt-contanct-header">TIN:</span>
+                        <span t-esc="state.receipt.tin" />
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">VRN:</span>
+                        <span t-esc="state.receipt.vrn" />
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">SERIAL NO:</span>
+                        <span t-esc="state.receipt.efd_serial" />
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">UIN:</span>
+                        <span t-esc="state.receipt.uin" />
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">TAX OFFICE:</span>
+                        <span t-esc="state.receipt.tax_office" />
+                    </div>
+                </div>
+                <hr style="border-top: dotted 1px" />
+
+                <!-- Customer Details -->
+                <div class="pos-receipt-detail">
+                    <div>
+                        <span class="pos-receipt-contanct-header">CUSTOMER NAME:</span>
+                        <span>
+                            <t t-if="state.receipt.cust_name">
+                                <t t-esc="state.receipt.cust_name" />
+                            </t>
+                            <t t-if="!state.receipt.cust_name">
+                            n/a
+                            </t>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">CUSTOMER ID TYPE:</span>
+                        <span>
+                            <t t-if="state.receipt.cust_id_type">
+                                <t t-esc="state.receipt.cust_id_type" />
+                            </t>
+                            <t t-if="!state.receipt.cust_id_type">
+                            NILL
+                            </t>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">CUSTOMER ID:</span>
+                        <span>
+                            <t t-if="state.receipt.cust_id">
+                                <t t-esc="state.receipt.cust_id" />
+                            </t>
+                            <t t-if="!state.receipt.cust_id">
+                            n/a
+                            </t>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">CUSTOMER VRN:</span>
+                        <span>
+                            <t t-if="state.receipt.cust_vrn">
+                                <t t-esc="state.receipt.cust_vrn" />
+                            </t>
+                            <t t-if="!state.receipt.cust_vrn">
+                            n/a
+                            </t>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">CUSTOMER MOBILE:</span>
+                        <span>
+                            <t t-if="state.receipt.cust_mobile_num">
+                                <t t-esc="state.receipt.cust_mobile_num" />
+                            </t>
+                            <t t-if="!state.receipt.cust_mobile_num">
+                            n/a
+                            </t>
+                        </span>
+                    </div>
+
+                    <!-- Receipt Details -->
+                    <hr style="border-top: dotted 1px" />
+                    <div>
+                        <span class="pos-receipt-contanct-header">RECEIPT NO:</span>
+                        <span t-esc="state.receipt.rct_num" />
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">Z NUMBER:</span>
+                        <span t-esc="state.receipt.z_num" />
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">RECEIPT DATE:</span>
+                        <span t-esc="state.receipt.date" />
+                    </div>
+                    <div>
+                        <span class="pos-receipt-contanct-header">RECEIPT TIME:</span>
+                        <span t-esc="state.receipt.time" />
+                    </div>
+                    <hr style="border-top: dotted 1px" />
+                </div>
+
+                <!-- Purchase Items -->
+                <table class="pos-receipt-table pos-receipt-table-stripped">
+                    <thead>
+                        <th style="width: 59%">Description</th>
+                        <th>Qty</th>
+                        <th>Amount</th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="state.receipt.lines" t-as="line" t-key="line.id">
+                            <tr>
+                                <td t-esc="line.desc" />
+                                <td t-esc="line.qty" />
+                                <td style="text-align: right;">
+                                    <span t-esc="line.amt" />
+                                    <span style="margin-left: 4px;" t-esc="line.tax_code" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <table class="pos-receipt-table">
+                    <tbody>
+                        <tr>
+                            <th style="width: 70%">TOTAL EXCL OF TAX:</th>
+                            <td align="right" t-esc="state.receipt.total_tax_excl" />
+                        </tr>
+                        <tr>
+                            <t t-if="state.receipt.vat_amt_a != '0.00' ">
+                                <th>
+                                    <small>TAX A - 18%:</small>
+                                </th>
+                                <td align="right">
+                                    <small t-esc="state.receipt.vat_amt_a" />
+                                </td>
+                            </t>
+                            <t t-if="state.receipt.vat_amt_b != '0.00'">
+                                <th>
+                                    <small>TAX B - 0%</small>
+                                </th>
+                                <td align="right">
+                                    <small t-esc="state.receipt.vat_amt_b" />
+                                </td>
+                            </t>
+                            <t t-if="state.receipt.vat_amt_c != '0.00'">
+                                <th>
+                                    <small>TAX C - 0%</small>
+                                </th>
+                                <td align="right">
+                                    <small t-esc="state.receipt.vat_amt_c" />
+                                </td>
+                            </t>
+                            <t t-if="state.receipt.vat_amt_d != '0.00'">
+                                <th>
+                                    <small>TAX D - 0%</small>
+                                </th>
+                                <td align="right">
+                                    <small t-esc="state.receipt.vat_amt_d" />
+                                </td>
+                            </t>
+                            <t t-if="state.receipt.vat_amt_e != '0.00'">
+                                <th>
+                                    <small>TAX E - 0%</small>
+                                </th>
+                                <td align="right">
+                                    <small t-esc="state.receipt.vat_amt_e" />
+                                </td>
+                            </t>
+                        </tr>
+                        <tr>
+                            <th>TOTAL TAX:</th>
+                            <td align="right" t-esc="state.receipt.total_tax" />
+                        </tr>
+                        <tr>
+                            <th>TOTAL INCL OF TAX:</th>
+                            <td align="right" t-esc="state.receipt.total_tax_incl" />
+                        </tr>
+                    </tbody>
+                </table>
+                <hr style="border-top: dotted 1px" />
+                <div style="text-align: center;">
+                    <span style="font-weight: bold;">RECEIPT VERIFICATION CODE</span>
+                    <br />
+                    <t t-esc="state.receipt.rctv_num" />
+
+
+
+                </div>
+                <hr style="border-top: dotted 1px" />
+                <!-- QR CODE -->
+                <img class="pos-receipt-qrcode" t-att-src="qrcodeUrl" />
+                <hr style="border-top: dotted 1px" />
+
+                <div style="text-align: center">
+                   *** END OF LEGAL RECEIPT ***
+                </div>
+            </div>
+        </div>
+
+    </t>
+</templates>

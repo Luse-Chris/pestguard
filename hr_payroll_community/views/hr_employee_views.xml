@@ -16,9 +16,9 @@
                         <field name="payslip_count" widget="statinfo" string="Payslips"/>
                     </button>
                 </xpath>
-                
         </field>
     </record>
+
     <record id="hr_view_employee_form_inherit" model="ir.ui.view">
         <field name="name">hr.view.employee.form.inherit</field>
         <field name="model">hr.employee</field>
@@ -34,6 +34,5 @@
                 
 
         </field>
-    </record>
-    
+     </record>
 </odoo>
